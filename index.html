@@ -1,0 +1,151 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Device Sensor Test</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">       
+            // Define an event handler to execute when a touch event occurs on the screen
+
+                var handleTouchEvent = function(e) {
+
+                // Get the list of all touches currently on the screen
+
+                   var allTouches = e.touches,
+                       allTouchesLength = allTouches.length,
+
+                   // Get a reference to an element on the page to write the total number of touches 
+                   // currently on the screen into
+
+                       touchCount = document.getElementById("touch-count"); 
+
+                   // Prevent the default browser action from occurring when the user touches and
+                   // holds their finger to the screen
+
+                   if (e.type === 'touchstart') {
+                           e.preventDefault();
+                   }
+
+                   // Write the number of current touches onto the page
+
+                   touchCount.innerHTML = 'There are currently ' + allTouchesLength + ' touches on the screen.';
+                };
+                
+                //
+                var acc, accGravity;
+                
+                // Define an event handler function for processing the device’s acceleration values
+ 
+                handleDeviceMotionEvent = function(e) {
+                    // Reference page elements for dropping current device acceleration values into
+ 
+ 
+                        // Get the current acceleration values in 3 axes and find the greatest of these
+ 
+                        acc = e.acceleration;
+ 
+                        // Get the acceleration values including gravity and find the greatest of these
+
+                        accGravity = e.accelerationIncludingGravity;
+
+                     };
+                     
+                function report(message) {
+                    var deviceInfo = document.getElementById('deviceinfo');
+                    deviceInfo.innerHTML = message;
+                }
+                     
+                function handleResizeEvent(e) {
+                    var or;
+                    switch(window.orientation) {
+                    case 0:
+                        or = 'portrait 0';
+                        document.body.className = '';
+                        break;
+                    case 180:
+                        or = 'portrait 180';
+                        document.body.className = '';
+                        break;
+                    case -90:
+                        or = 'landscape -90';
+                        document.body.className = 'orientright';
+                        break;
+                    case 90:
+                        or = 'landscape 90';
+                        document.body.className = 'orientleft';
+                        break;
+                    default:
+                        or = 'default';
+                        break;
+                    }
+                    var html = or + '<br />';
+                    html += 'width: ' + window.screen.width + 'height: ' + window.screen.height;
+                    report(html);
+                }
+ 
+                function displayAcceleration() {
+                    var accElem = document.getElementById('acceleration');
+                    
+                    var ax = acc.x;
+                    var ay = acc.y;
+                    var az = acc.z;
+                    var agx = accGravity.x;
+                    var agy = accGravity.y;
+                    var agz = accGravity.z;
+                    
+                    var html = 'Acceleration:<br />';
+                    html += 'x: ' + ax +'<br />y: ' + ay + '<br/>z: ' + az+ '<br />';
+                    html += 'Acceleration including gravity:<br />';
+                    html += 'x: ' + agx +'<br />y: ' + agy + '<br/>z: ' + agz+ '<br />';
+                    accElem.innerHTML = html;
+                }
+ 
+                // Assign the event handler to execute when a finger touches ('touchstart') or is removed from ('touchend') the screen
+                function setup()
+                {
+                    window.addEventListener('touchstart', handleTouchEvent, false);
+                    window.addEventListener('touchend', handleTouchEvent, false);
+                    window.addEventListener('devicemotion', handleDeviceMotionEvent, false);
+                    window.setInterval(displayAcceleration,500);
+                    /*
+                    var deviceInfo = document.getElementById('deviceinfo');
+                    var html = 'This device:<br />';
+                    html += 'oscpu: ' + window.navigator.oscpu + '<br />';
+                    html += 'platform: ' + window.navigator.platform + '<br />';
+                    html += 'product: ' + window.navigator.product + '<br />';
+                    html += 'productSub: ' + window.navigator.productSub + '<br />';
+                    html += 'userAgent: ' + window.navigator.userAgent + '<br />';
+                    html += 'available width: ' + window.screen.availWidth + '<br />' + 
+                            'available height: ' + window.screen.availHeight;
+                    deviceInfo.innerHTML = html; */
+                    window.addEventListener('resize', handleResizeEvent, false);
+                }
+        </script>
+        <style type="text/css">
+            body {
+                font: 16px helvetica;
+            }
+            .orientleft {
+                -webkit-transform: rotate(-90deg);
+                -webkit-transform-origin: 160px 160px;
+            }
+            .orientright {
+                -webkit-transform: rotate(90deg);
+                -webkit-transform-origin: 230px 230px;
+            }
+        </style>
+    </head>
+    <body onload="setup();">
+        <div>Device Sensor Test</div>
+        <div id="deviceinfo">
+            device info
+        </div>
+        <div id="touch-count"></div>
+        <div id="acceleration">
+            a 
+        </div>
+    </body>
+</html>
