@@ -97,7 +97,8 @@ and open the template in the editor.
                     var agz = accGravity.z;
                     
                     var html = 'gravity:<br />';
-                    html += 'x: ' + (ax-agx) +'<br />y: ' + (ay-agy) + '<br/>z: ' + (az-agz);
+                    html += 'x: ' + (ax-agx) +'<br />y: ' + (ay-agy) + '<br/>z: ' + (az-agz) + '<br />';
+                    html += 'width: ' + window.innerWidth + 'height: ' + window.innerHeight;
                     accElem.innerHTML = html;
                 }
  
@@ -119,7 +120,7 @@ and open the template in the editor.
                     html += 'available width: ' + window.screen.availWidth + '<br />' + 
                             'available height: ' + window.screen.availHeight;
                     deviceInfo.innerHTML = html; */
-                    window.addEventListener('resize', handleResizeEvent, false);
+                    //window.addEventListener('resize', handleResizeEvent, false);
                 }
         </script>
         <style type="text/css">
