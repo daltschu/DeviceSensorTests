@@ -63,19 +63,19 @@ and open the template in the editor.
                     switch(window.orientation) {
                     case 0:
                         or = 'portrait 0';
-                        document.body.className = '';
+                        //document.body.className = '';
                         break;
                     case 180:
                         or = 'portrait 180';
-                        document.body.className = '';
+                        //document.body.className = '';
                         break;
                     case -90:
                         or = 'landscape -90';
-                        document.body.className = 'orientright';
+                        //document.body.className = 'orientright';
                         break;
                     case 90:
                         or = 'landscape 90';
-                        document.body.className = 'orientleft';
+                        //document.body.className = 'orientleft';
                         break;
                     default:
                         or = 'default';
@@ -96,10 +96,8 @@ and open the template in the editor.
                     var agy = accGravity.y;
                     var agz = accGravity.z;
                     
-                    var html = 'Acceleration:<br />';
-                    html += 'x: ' + ax +'<br />y: ' + ay + '<br/>z: ' + az+ '<br />';
-                    html += 'Acceleration including gravity:<br />';
-                    html += 'x: ' + agx +'<br />y: ' + agy + '<br/>z: ' + agz+ '<br />';
+                    var html = 'gravity:<br />';
+                    html += 'x: ' + (ax-agx) +'<br />y: ' + (ay-agy) + '<br/>z: ' + (az-agz);
                     accElem.innerHTML = html;
                 }
  
